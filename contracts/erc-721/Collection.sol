@@ -43,6 +43,8 @@ contract Collection is
      */
     event Mint(uint256 indexed tokenId, address artistId);
 
+    event BatchMint(uint256 startTokenId, uint256 endTokenId, address artistId);
+
     modifier onlyOwner() {
         if (owner != msg.sender) revert CallerNotOwner();
         _;
@@ -79,6 +81,33 @@ contract Collection is
         _mint(recipient, tokenId);
         _tokenCIDs[tokenId] = tokenCID;
         emit Mint(tokenId, msg.sender);
+    }
+
+    function batchMint(address recipient, string[] calldata tokenCIDs)
+        external
+        onlyOwner
+    {
+        uint256 currentTokenId = latestTokenId;
+        uint256 startTokenId;
+        unchecked {
+            startTokenId = currentTokenId + 1;
+        }
+
+        for (uint256 i = 0; i < tokenCIDs.length; ) {
+            unchecked {
+                ++currentTokenId;
+            }
+
+            _mint(recipient, currentTokenId);
+            _tokenCIDs[currentTokenId] = tokenCIDs[i];
+
+            unchecked {
+                ++i;
+            }
+        }
+
+        latestTokenId = currentTokenId;
+        emit BatchMint(startTokenId, currentTokenId, msg.sender);
     }
 
     function mintAndApprove(
