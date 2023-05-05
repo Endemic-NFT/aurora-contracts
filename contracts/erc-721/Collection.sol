@@ -43,6 +43,12 @@ contract Collection is
      */
     event Mint(uint256 indexed tokenId, address artistId);
 
+    /**
+     * @notice Emitted when batch of NFTs is minted
+     * @param startTokenId The tokenId of the first minted NFT in the batch
+     * @param endTokenId The tokenId of the last minted NFT in the batch
+     * @param artistId The address of the creator
+     */
     event BatchMint(uint256 startTokenId, uint256 endTokenId, address artistId);
 
     modifier onlyOwner() {
@@ -93,7 +99,8 @@ contract Collection is
             startTokenId = currentTokenId + 1;
         }
 
-        for (uint256 i = 0; i < tokenCIDs.length; ) {
+        uint256 tokenCIDsLength = tokenCIDs.length;
+        for (uint256 i = 0; i < tokenCIDsLength; ) {
             unchecked {
                 ++currentTokenId;
             }
