@@ -43,6 +43,14 @@ contract Collection is
      */
     event Mint(uint256 indexed tokenId, address artistId);
 
+    /**
+     * @notice Emitted when batch of NFTs is minted
+     * @param startTokenId The tokenId of the first minted NFT in the batch
+     * @param endTokenId The tokenId of the last minted NFT in the batch
+     * @param artistId The address of the creator
+     */
+    event BatchMint(uint256 startTokenId, uint256 endTokenId, address artistId);
+
     modifier onlyOwner() {
         if (owner != msg.sender) revert CallerNotOwner();
         _;
@@ -71,25 +79,57 @@ contract Collection is
     function mint(address recipient, string calldata tokenCID)
         external
         onlyOwner
-        returns (uint256 tokenId)
     {
-        tokenId = ++latestTokenId;
-        _safeMint(recipient, tokenId);
+        uint256 tokenId;
+        unchecked {
+            tokenId = ++latestTokenId;
+        }
+        _mint(recipient, tokenId);
         _tokenCIDs[tokenId] = tokenCID;
-        emit Mint(tokenId, owner);
+        emit Mint(tokenId, msg.sender);
+    }
+
+    function batchMint(address recipient, string[] calldata tokenCIDs)
+        external
+        onlyOwner
+    {
+        uint256 currentTokenId = latestTokenId;
+        uint256 startTokenId;
+        unchecked {
+            startTokenId = currentTokenId + 1;
+        }
+
+        uint256 tokenCIDsLength = tokenCIDs.length;
+        for (uint256 i = 0; i < tokenCIDsLength; ) {
+            unchecked {
+                ++currentTokenId;
+            }
+
+            _mint(recipient, currentTokenId);
+            _tokenCIDs[currentTokenId] = tokenCIDs[i];
+
+            unchecked {
+                ++i;
+            }
+        }
+
+        latestTokenId = currentTokenId;
+        emit BatchMint(startTokenId, currentTokenId, msg.sender);
     }
 
     function mintAndApprove(
         address recipient,
         string calldata tokenCID,
         address operator
-    ) external onlyOwner returns (uint256 tokenId) {
-        tokenId = ++latestTokenId;
-        _safeMint(recipient, tokenId);
+    ) external onlyOwner {
+        uint256 tokenId;
+        unchecked {
+            tokenId = ++latestTokenId;
+        }
         setApprovalForAll(operator, true);
+        _mint(recipient, tokenId);
         _tokenCIDs[tokenId] = tokenCID;
-        emit Mint(tokenId, owner);
-        return tokenId;
+        emit Mint(tokenId, msg.sender);
     }
 
     function tokenURI(uint256 tokenId)
