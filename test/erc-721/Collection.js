@@ -54,6 +54,7 @@ describe('Collection', function () {
       const tokenId = 1;
       const mintTx = await newCollection.mint(
         user.address,
+        owner.address,
         'bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi'
       );
 
@@ -77,6 +78,7 @@ describe('Collection', function () {
         .connect(owner)
         .mint(
           user.address,
+          owner.address,
           'bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi'
         );
 
@@ -101,6 +103,7 @@ describe('Collection', function () {
             .connect(owner)
             .mint(
               user.address,
+              user.address,
               `bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi-${i}`
             )
         );
@@ -113,6 +116,7 @@ describe('Collection', function () {
           nftContract
             .connect(owner)
             .mint(
+              user.address,
               user.address,
               `bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi-${i}`
             )
@@ -133,6 +137,7 @@ describe('Collection', function () {
           .connect(user)
           .mint(
             user.address,
+            user.address,
             'bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi'
           )
       ).to.be.revertedWith('CallerNotOwner');
@@ -141,12 +146,14 @@ describe('Collection', function () {
     it('should mint an NFT after burn', async function () {
       await nftContract.mint(
         owner.address,
+        owner.address,
         'bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi'
       );
 
       await nftContract.burn(1);
 
       await nftContract.mint(
+        owner.address,
         owner.address,
         'bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi'
       );
@@ -195,6 +202,7 @@ describe('Collection', function () {
     it('should burn if token owner', async function () {
       await nftContract.mint(
         owner.address,
+        owner.address,
         'bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi'
       );
 
@@ -206,10 +214,12 @@ describe('Collection', function () {
     it('should burn multiple tokens', async function () {
       await nftContract.mint(
         owner.address,
+        owner.address,
         'bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi'
       );
 
       await nftContract.mint(
+        owner.address,
         owner.address,
         'bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi'
       );
@@ -224,11 +234,12 @@ describe('Collection', function () {
     it('should fail to burn if not token owner', async function () {
       await nftContract.mint(
         owner.address,
+        owner.address,
         'bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi'
       );
 
       await expect(nftContract.connect(user).burn(1)).to.be.revertedWith(
-        'CallerNotOwner()'
+        'ERC721: caller is not token owner nor approved'
       );
     });
   });

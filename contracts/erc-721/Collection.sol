@@ -76,23 +76,25 @@ contract Collection is
         initializeCollectionRoyalties(creator, royalties);
     }
 
-    function mint(address recipient, string calldata tokenCID)
-        external
-        onlyOwner
-    {
+    function mint(
+        address recipient,
+        address artist,
+        string calldata tokenCID
+    ) external onlyOwner {
         uint256 tokenId;
         unchecked {
             tokenId = ++latestTokenId;
         }
         _mint(recipient, tokenId);
         _tokenCIDs[tokenId] = tokenCID;
-        emit Mint(tokenId, msg.sender);
+        emit Mint(tokenId, artist);
     }
 
-    function batchMint(address recipient, string[] calldata tokenCIDs)
-        external
-        onlyOwner
-    {
+    function batchMint(
+        address recipient,
+        address artist,
+        string[] calldata tokenCIDs
+    ) external onlyOwner {
         uint256 currentTokenId = latestTokenId;
         uint256 startTokenId;
         unchecked {
@@ -114,7 +116,7 @@ contract Collection is
         }
 
         latestTokenId = currentTokenId;
-        emit BatchMint(startTokenId, currentTokenId, msg.sender);
+        emit BatchMint(startTokenId, currentTokenId, artist);
     }
 
     function mintAndApprove(

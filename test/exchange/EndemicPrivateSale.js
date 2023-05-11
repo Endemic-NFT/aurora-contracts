@@ -41,6 +41,7 @@ describe('EndemicPrivateSale', () => {
       .connect(owner)
       .mint(
         recipient,
+        owner.address,
         'bafybeigdyrzt5sfp7udm7hu76uh7y2anf3efuylqabf3oclgtqy55fbzdi'
       );
   }

@@ -40,6 +40,7 @@ describe('ExchangeReserveAuction', function () {
       .connect(owner)
       .mint(
         recipient,
+        owner.address,
         'bafybeigdyrzt5sfp7udm7hu76uh7y26nf3efuylqabf3oclgtqy55fbzdi'
       );
   }
