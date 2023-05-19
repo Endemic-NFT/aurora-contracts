@@ -34,6 +34,12 @@ const aurora = {
 };
 
 const mainnet = {
+  royaltiesProviderProxy: '0x99F8D550094076b63bbBe84D291Bb8a6D34133aB',
+  endemicErc721Factory: '0xC895Fdf7c328858a4558bC56FD30Ba7936F3d28a',
+  endemicErc721: '0x93ee9ed775C85d2546e058e789B29E9be033bbB4',
+  endemicExchangeProxy: '0xa0607F6c1be269631De836724768e3aeeb2272F4',
+  paymentManagerProxy: '0xD48CC91057118e15fB9841c2138E2ec836AbF438',
+
   endemicENDToken: '0x7f5C4AdeD107F66687E6E55dEe36A3A8FA3de030',
 };
 
