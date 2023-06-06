@@ -27,7 +27,8 @@ abstract contract EndemicExchangeCore {
 
     uint256 internal constant MAX_FEE = 10000;
     uint256 internal constant MIN_PRICE = 0.0001 ether;
-    address internal constant ZERO_ADDRESS = address(0);
+    address internal constant ZERO_ADDRESS =
+        address(0x0000000000000000000000000000000000001010);
 
     modifier onlySupportedERC20Payments(address paymentErc20TokenAddress) {
         if (
@@ -66,11 +67,10 @@ abstract contract EndemicExchangeCore {
         totalCut = takerCut + makerCut;
     }
 
-    function _calculateTakerCut(address paymentErc20TokenAddress, uint256 price)
-        internal
-        view
-        returns (uint256)
-    {
+    function _calculateTakerCut(
+        address paymentErc20TokenAddress,
+        uint256 price
+    ) internal view returns (uint256) {
         (uint256 takerFee, ) = paymentManager.getPaymentMethodFees(
             paymentErc20TokenAddress
         );
@@ -78,11 +78,10 @@ abstract contract EndemicExchangeCore {
         return _calculateCut(takerFee, price);
     }
 
-    function _calculateCut(uint256 fee, uint256 amount)
-        internal
-        pure
-        returns (uint256)
-    {
+    function _calculateCut(
+        uint256 fee,
+        uint256 amount
+    ) internal pure returns (uint256) {
         return (amount * fee) / MAX_FEE;
     }
 
@@ -119,10 +118,9 @@ abstract contract EndemicExchangeCore {
         }
     }
 
-    function _requireSupportedPaymentMethod(address paymentMethodAddress)
-        internal
-        view
-    {
+    function _requireSupportedPaymentMethod(
+        address paymentMethodAddress
+    ) internal view {
         if (paymentMethodAddress == ZERO_ADDRESS) return;
 
         if (!paymentManager.isPaymentMethodSupported(paymentMethodAddress)) {
@@ -146,10 +144,9 @@ abstract contract EndemicExchangeCore {
         }
     }
 
-    function _requireSufficientEtherSupplied(uint256 sufficientAmount)
-        internal
-        view
-    {
+    function _requireSufficientEtherSupplied(
+        uint256 sufficientAmount
+    ) internal view {
         if (msg.value < sufficientAmount) {
             revert UnsufficientCurrencySupplied();
         }

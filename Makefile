@@ -61,3 +61,4 @@ updatePaymentManager:
 .PHONY: verify
 verify:
 	npx hardhat verify --network ${network} "${address}"
+	

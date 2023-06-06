@@ -24,7 +24,7 @@ module.exports = {
     hardhat: {},
     mainnet: {
       url: `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`,
-      accounts: [process.env.MAINNET_PRIVATE_KEY],
+      accounts: [process.env.PRIVATE_KEY],
     },
     goerli: {
       url: `https://eth-goerli.alchemyapi.io/v2/${process.env.ALCHEMY_API_KEY}`,
@@ -34,9 +34,13 @@ module.exports = {
       url: `https://arb-goerli.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`,
       accounts: [process.env.PRIVATE_KEY],
     },
+    polygon_mumbai: {
+      url: `https://polygon-mumbai.g.alchemy.com/v2/${process.env.ALCHEMY_API_KEY}`,
+      accounts: [process.env.PRIVATE_KEY],
+    },
     aurora: {
       url: 'https://mainnet.aurora.dev',
-      accounts: [`0x${process.env.MAINNET_PRIVATE_KEY}`],
+      accounts: [`0x${process.env.PRIVATE_KEY}`],
       chainId: 1313161554,
       timeout: 80000,
     },

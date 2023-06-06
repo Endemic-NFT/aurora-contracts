@@ -7,7 +7,8 @@ error UnsupportedPaymentMethod();
 error InvalidFees();
 
 contract PaymentManager is OwnableUpgradeable {
-    address internal constant ZERO_ADDRESS = address(0);
+    address internal constant ZERO_ADDRESS =
+        address(0x0000000000000000000000000000000000001010);
     uint256 internal constant MAX_FEE = 10000;
 
     mapping(address => bool) public supportedPaymentMethods;
@@ -20,10 +21,10 @@ contract PaymentManager is OwnableUpgradeable {
         uint256 takerFee;
     }
 
-    function __PaymentManager_init(uint256 makerFee, uint256 takerFee)
-        external
-        initializer
-    {
+    function __PaymentManager_init(
+        uint256 makerFee,
+        uint256 takerFee
+    ) external initializer {
         __Ownable_init_unchained();
 
         //initial support and fees for ether payments
@@ -36,11 +37,9 @@ contract PaymentManager is OwnableUpgradeable {
         );
     }
 
-    function getPaymentMethodFees(address paymentMethodAddress)
-        external
-        view
-        returns (uint256 takerFee, uint256 makerFee)
-    {
+    function getPaymentMethodFees(
+        address paymentMethodAddress
+    ) external view returns (uint256 takerFee, uint256 makerFee) {
         PaymentMethodFees memory paymentFees = feesByPaymentMethod[
             paymentMethodAddress
         ];
@@ -54,11 +53,9 @@ contract PaymentManager is OwnableUpgradeable {
         makerFee = paymentFees.makerFee;
     }
 
-    function isPaymentMethodSupported(address paymentMethodAddress)
-        external
-        view
-        returns (bool)
-    {
+    function isPaymentMethodSupported(
+        address paymentMethodAddress
+    ) external view returns (bool) {
         return supportedPaymentMethods[paymentMethodAddress];
     }
 

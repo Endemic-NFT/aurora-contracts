@@ -7,7 +7,7 @@ async function main() {
 
   const EndemicToken = await ethers.getContractFactory('EndemicToken');
   const endemicToken = await EndemicToken.deploy(
-    '0xcF96Ed58395d55d6bd0c470f7ed064741119cbC5'
+    '0x3D77a01EF9265F8Af731367abF5b467641764191'
   );
   await endemicToken.deployed();
 

@@ -13,6 +13,21 @@ const goerli = {
   endemicENDToken: '0x27f31c8B3D6024C44155De1198dB86F23124b1A4',
 };
 
+const polygon_mumbai = {
+  royaltiesProviderProxy: '0x3B7A2D4bfA13378f275146D7AE05518F42241BcD',
+  endemicErc721Factory: '0x137ae0d8eaE185A626A2d6ff3F8380C20aAA0909',
+  endemicErc721: '0x637C6243b90615e84e893dF1F6797D9E7f820c1F',
+  endemicExchangeProxy: '0x76c0A2cBb93905B67FB44F09C3ED8978d0a59327',
+  contractImporter: '',
+  paymentManagerProxy: '0xcC350cAE79f8A833F7E3037F77Fa4d3977aE799c',
+
+  endemicERC1155Proxy: '',
+  endemicERC1155Beacon: '',
+  endemicERC1155Factory: '',
+
+  endemicENDToken: '0x27f31c8B3D6024C44155De1198dB86F23124b1A4',
+};
+
 const arbitrum_goerli = {
   royaltiesProviderProxy: '0x03B19c39355fD271A0fF071fAeaEe65F4fe26914',
   endemicErc721Factory: '0x45F3e4c28b68142e7C83c55aA95F3c5281006DB8',
@@ -48,6 +63,7 @@ const networks = {
   mainnet,
   goerli,
   arbitrum_goerli,
+  polygon_mumbai,
 };
 
 const getForNetwork = (network) => networks[network];

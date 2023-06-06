@@ -23,7 +23,10 @@ abstract contract EndemicFundsDistributor {
     ) internal {
         uint256 sellerProceeds = price - makerCut - royaltieFee;
 
-        if (paymentErc20TokenAddress == address(0)) {
+        if (
+            paymentErc20TokenAddress ==
+            address(0x0000000000000000000000000000000000001010)
+        ) {
             _distributeEtherFunds(
                 royaltieFee,
                 totalCut,
@@ -152,9 +155,9 @@ abstract contract EndemicFundsDistributor {
         if (!success) revert FundsTransferFailed();
     }
 
-    function _updateDistributorConfiguration(address _feeRecipientAddress)
-        internal
-    {
+    function _updateDistributorConfiguration(
+        address _feeRecipientAddress
+    ) internal {
         feeRecipientAddress = _feeRecipientAddress;
     }
 
